@@ -24,6 +24,15 @@ router.get('/:id', (req, res) => {
         model: Post,
         attributes: ['id', 'title', 'post_url', 'created_at']
       },
+      // include the Comment model here:
+      {
+        model: Comment,
+        attributes: ['id', 'comment_text', 'created_at'],
+        include: {
+          model: Post,
+          attributes: ['title']
+        }
+      },
       {
         model: Post,
         attributes: ['title'],
@@ -76,7 +85,7 @@ router.post('/login', (req, res) => {
       res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
-    
+
     res.json({ user: dbUserData, message: 'You are now logged in!' });
     //res.json({ user: dbUserData });
 
